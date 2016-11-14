@@ -1,5 +1,5 @@
 {
-  "name": "serzh/amazon-mws-orders",
+  "name": "serzh/amazon-mws-merchant-fulfillment",
   "description": "Amazon Merchant Fulfillment API PHP Client Library",
   "type": "library",
   "authors": [
