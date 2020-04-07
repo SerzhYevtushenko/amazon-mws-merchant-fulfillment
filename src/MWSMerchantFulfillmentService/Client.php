@@ -469,7 +469,7 @@ class MWSMerchantFulfillmentService_Client implements MWSMerchantFulfillmentServ
     /**
      * Invoke request and return response
      */
-    private function _invoke(array $parameters)
+    public function _invoke(array $parameters, $version = self::SERVICE_VERSION)
     {
         try {
             if (empty($this->_config['ServiceURL'])) {
@@ -478,7 +478,7 @@ class MWSMerchantFulfillmentService_Client implements MWSMerchantFulfillmentServ
                     array ('ErrorCode' => 'InvalidServiceURL',
                            'Message' => "Missing serviceUrl configuration value. You may obtain a list of valid MWS URLs by consulting the MWS Developer's Guide, or reviewing the sample code published along side this library."));
             }
-            $parameters = $this->_addRequiredParameters($parameters);
+            $parameters = $this->_addRequiredParameters($parameters, $version);
             $retries = 0;
             for (;;) {
                 $response = $this->_httpPost($parameters);
@@ -741,11 +741,11 @@ class MWSMerchantFulfillmentService_Client implements MWSMerchantFulfillmentServ
     /**
      * Add authentication related and version parameters
      */
-    private function _addRequiredParameters(array $parameters)
+    private function _addRequiredParameters(array $parameters, $version)
     {
         $parameters['AWSAccessKeyId'] = $this->_awsAccessKeyId;
         $parameters['Timestamp'] = $this->_getFormattedTimestamp();
-        $parameters['Version'] = self::SERVICE_VERSION;
+        $parameters['Version'] = $version;
         $parameters['SignatureVersion'] = $this->_config['SignatureVersion'];
         if ($parameters['SignatureVersion'] > 1) {
             $parameters['SignatureMethod'] = $this->_config['SignatureMethod'];
